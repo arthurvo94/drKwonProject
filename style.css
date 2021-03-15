@@ -1,0 +1,22 @@
+body{
+    /* font-family: Arial; */
+    margin: 0;
+    font-family: 'Quicksand', sans-serif;
+    color: rgb(20,20,20);
+    background-image: url("whitetexture.png");
+}
+
+.header{
+    padding: 5px;
+    padding-left: 18px;
+    background: rgb(60,60,60);
+    /* color: rgb(20,20,20); */
+    color: white;
+    font-size: 15px;
+
+}
+
+.body{
+    padding-left: 45px;
+    
+}
