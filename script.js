@@ -28,6 +28,9 @@ text.addEventListener("keydown", function(e){
 
 go.addEventListener("click", function(){
     add(document.querySelector("input").value.trim());
+    if(codeList.length <= 0){
+        return;
+    }
     fusEl.innerHTML = "Fusion: ";
     decEl.innerHTML = "Decompression: ";
     instEl.innerHTML = "Instrumentation: ";
@@ -46,7 +49,6 @@ go.addEventListener("click", function(){
         otherEl.innerHTML += "[" + other.join(", ") + "]";
     }
 })
-
 
 clear.addEventListener("click", function(){
     codeList = []; fus = []; dec = []; inst = []; other = [];
@@ -84,7 +86,3 @@ function add(x){
 
     return true;  
 }
-
-
-
-
