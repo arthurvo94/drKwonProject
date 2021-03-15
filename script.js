@@ -6,8 +6,13 @@ const instList = ["22853","22854","22859","22840","22841","22842","22843","22844
 const otherList = ["20930","20931","20936","20937","20938","22830"];
 
 const text = document.getElementById("input");
-const codePrint = document.getElementById("all");
-var isEmpty = true;
+const go = document.getElementById("goButton");
+const clear = document.getElementById("clearButton");
+const codeEl = document.getElementById("all");
+const fusEl = document.getElementById("fus");
+const decEl = document.getElementById("dec");
+const instEl = document.getElementById("inst");
+const otherEl = document.getElementById("other");
 
 fus = [];
 dec = [];
@@ -21,10 +26,38 @@ text.addEventListener("keydown", function(e){
     }
 })
 
+go.addEventListener("click", function(){
+    add(document.querySelector("input").value.trim());
+    fusEl.innerHTML = "Fusion: ";
+    decEl.innerHTML = "Decompression: ";
+    instEl.innerHTML = "Instrumentation: ";
+    otherEl.innerHTML = "Other: ";
+
+    if(fus.length > 0){
+        fusEl.innerHTML += "[" + fus.join(", ") + "]";
+    }
+    if(dec.length > 0){
+        decEl.innerHTML += "[" + dec.join(", ") + "]";
+    }
+    if(inst.length > 0){
+        instEl.innerHTML += "[" + inst.join(", ") + "]";
+    }
+    if(other.length > 0){
+        otherEl.innerHTML += "[" + other.join(", ") + "]";
+    }
+})
+
+
+clear.addEventListener("click", function(){
+    codeList = []; fus = []; dec = []; inst = []; other = [];
+    codeEl.innerHTML = ""; fusEl.innerHTML = ""; decEl.innerHTML = "";
+    instEl.innerHTML = ""; otherEl.innerHTML = "";
+})
+
 function add(x){
     text.value = "";
     //returns if code has already been added
-    if(codeList.indexOf(x) != -1){
+    if(codeList.indexOf(x) != -1 || x.length < 1){
         return false;
     }
 
@@ -46,13 +79,8 @@ function add(x){
     }
 
     codeList.push(x);
-    
-    if(isEmpty){
-        isEmpty = false;
-        codePrint.innerHTML+= "Codes entered: [" + codeList.join(", ") + "]";
-    }
 
-    codeList.push(x);
+    codeEl.innerHTML = "Codes entered: [" + codeList.join(", ") + "]";
 
     return true;  
 }
