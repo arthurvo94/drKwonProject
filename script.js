@@ -13,12 +13,14 @@ const fusEl = document.getElementById("fus");
 const decEl = document.getElementById("dec");
 const instEl = document.getElementById("inst");
 const otherEl = document.getElementById("other");
+const notEl = document.getElementById("not");
 
 fus = [];
 dec = [];
 inst = [];
 other = [];
 codeList = [];
+notList = [];
 
 text.addEventListener("keydown", function(e){
     if(e.keyCode === 13){
@@ -28,6 +30,7 @@ text.addEventListener("keydown", function(e){
 
 go.addEventListener("click", function(){
     add(document.querySelector("input").value.trim());
+
     if(codeList.length <= 0){
         return;
     }
@@ -35,6 +38,7 @@ go.addEventListener("click", function(){
     decEl.innerHTML = "Decompression: ";
     instEl.innerHTML = "Instrumentation: ";
     otherEl.innerHTML = "Other: ";
+    notEl.innerHTML = "Not on the list: ";
 
     if(fus.length > 0){
         fusEl.innerHTML += "[" + fus.join(", ") + "]";
@@ -48,15 +52,30 @@ go.addEventListener("click", function(){
     if(other.length > 0){
         otherEl.innerHTML += "[" + other.join(", ") + "]";
     }
+    if(notList.length > 0){
+        notEl.innerHTML += "[" + notList.join(", ") + "]";
+    }
 })
 
 clear.addEventListener("click", function(){
     codeList = []; fus = []; dec = []; inst = []; other = [];
     codeEl.innerHTML = ""; fusEl.innerHTML = ""; decEl.innerHTML = "";
-    instEl.innerHTML = ""; otherEl.innerHTML = "";
+    instEl.innerHTML = ""; otherEl.innerHTML = ""; notEl.innerHTML = "";
+    notEl.innerHTML = "";
 })
 
 function add(x){
+    if(x.includes(","))
+        x = x.split(",")
+    else
+        x = x.split(" ");
+
+    for(i = 0; i < x.length; i++){
+        addHelper(x[i].trim());
+    }
+}
+//adds code to corresponding lists
+function addHelper(x){
     text.value = "";
     //returns if code has already been added
     if(codeList.indexOf(x) != -1 || x.length < 1){
@@ -76,9 +95,12 @@ function add(x){
         other.push(x);
     }
     else{
-        window.alert("CPT code not in scope");
-        return false;
+        notList.push(x);
     }
+//    else{
+//        window.alert("CPT code not in scope");
+//        return false;
+//    }
 
     codeList.push(x);
 
